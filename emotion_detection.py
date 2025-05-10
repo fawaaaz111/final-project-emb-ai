@@ -12,14 +12,6 @@ def emotion_detector(text_to_analyse: str) -> dict[str,any]:
     
     response = requests.post(url, json = myobj, headers = header)  # Send a POST request to the API with the text and headers
 
-    # Check if the response status code is not 200 (OK)
-    if response.status_code != 200:
-        return {'label': "None", 'score': "None"}  # Return a default response if the request failed
-    
-    formated = json.loads(response.text)
+    formated_response = json.loads(response.text)  # Parse the JSON response
 
-    label = formated.get("documentEmotion", {}).get("label", "N/A")  # Extract the emotion label from the response
-    score = formated.get("documentEmotion", {}).get("score", "N/A")  # Extract the emotion score from the response
-
-
-    return {'label': f"{label}", 'score': f"{score}"}  # Return the response text from the API
+    return formated_response  # Return the parsed response
