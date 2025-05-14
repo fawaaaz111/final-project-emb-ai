@@ -21,7 +21,10 @@ def emotionDetector() -> str:
 
     emotions = {k: result[k] for k in ("anger", "disgust", "fear", "joy", "sadness")} # extract relevant emotions to dictionary of {emotion: score}
     
-    dominant_emotion = max(emotions, key=emotions.get) # get the emotion with the highest score
+    try:
+        dominant_emotion = max(emotions, key=emotions.get) # get the emotion with the highest score
+    except:
+        return "Invalid text!\nPlease try again!."
 
     resp_text = f"For the given statement, the system response is {', '.join(f'{k}: {v}' for k, v in emotions.items())}. The dominant emotion is <b>{dominant_emotion}</b>."
     

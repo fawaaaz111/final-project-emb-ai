@@ -10,7 +10,9 @@ def emotion_detector(text_to_analyse: str) -> dict[str, any]:
     header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
     
     response = requests.post(url, json=myobj, headers=header)
-
+    if response.status_code != 200: # Error handling for black user entry
+        return {"anger": None, "disgust": None, "fear": None, "joy": None, "sadness": None, "dominant_emotion": None}
+    
     emotions = response.json()['emotionPredictions'][0].get("emotion")
     # Select the emotion with the highest value (confidence score)
     # by using the max function with a key argument.
